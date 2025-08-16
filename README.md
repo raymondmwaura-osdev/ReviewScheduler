@@ -11,6 +11,7 @@
 
   * `daily.json`: Maps each learning date to its scheduled review dates.
   * `reviews_by_date.json`: Maps each review date to the learning dates due on that day.
+
 * Creates a `today.md` file with daily review requirements, organized by priority.
 * Archives past `today.md` files into a `history/` directory for record-keeping.
 * Automatically maintains backups of schedule files for reliability.

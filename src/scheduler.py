@@ -1,4 +1,9 @@
 """
+This module generates review dates based on a given study date.
+
+The study date is provided as a string in the format "YYYY-MM-DD". Review
+dates are calculated using fixed day intervals and returned as a dictionary
+mapping the study date to its scheduled review dates.
 """
 
 from datetime import datetime, timedelta

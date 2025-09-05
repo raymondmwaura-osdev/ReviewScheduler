@@ -1,8 +1,3 @@
-"""
-Use argparse to get the "init" argument.
-If it is given, use the "init" module to initiate the scheduler in the current working directory.
-"""
-
 from scheduler import schedule_review_dates
 from init import init_scheduler
 import argparse

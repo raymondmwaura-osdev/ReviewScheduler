@@ -3,6 +3,7 @@ Use argparse to get the "init" argument.
 If it is given, use the "init" module to initiate the scheduler in the current working directory.
 """
 
+from scheduler import schedule_review_dates
 from init import init_scheduler
 import argparse
 
@@ -16,6 +17,12 @@ subparser.add_parser(
     help="Initiate ReviewScheduler in the current directory."
 )
 
+add_date_parser = subparser.add_parser(
+    "add",
+    help="Add study date."
+)
+add_date_parser.add_argument("study_date")
+
 args = parser.parse_args()
 
 ###
@@ -23,5 +30,5 @@ args = parser.parse_args()
 if args.command == "init":
     init_scheduler()
 
-else:
-    print("Not Initiating")
+elif args.command == "add":
+    print(schedule_review_dates(args.study_date))

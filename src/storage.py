@@ -1,4 +1,3 @@
-
 from pathlib import Path
 import json
 
@@ -22,7 +21,9 @@ def append_json(file: str | Path, content: dict) -> None:
     file = Path(file)
     main_dict = read_json(file)
     main_dict = main_dict | content
-    print(main_dict)
+    write_json(main_dict, file)
+
+    # In the future, check for keys that are present in both dictionaries (main_dict and content).
 
 def read_json(file: str | Path) -> dict[str, list[str]]:
     """
@@ -39,5 +40,19 @@ def read_json(file: str | Path) -> dict[str, list[str]]:
         return json.loads(file.read_text(encoding="utf-8"))
 
     except FileNotFoundError:
-        print(f"WARNING: File not found: {file}. Proceeding with empty content.")
+        print(f"WARNING: File not found: \"{file}\". Proceeding with empty content.")
         return {}
+
+def write_json(content: dict, file: str | Path) -> None:
+    """
+    Write the given dictionary to the given file.
+
+    :param content: The dictionary to write to the JSON file.
+    :param file: The JSON file to write to. Can be a string or a `Path` object.
+    """
+    if not isinstance(file, (str, Path)):
+        raise ValueError("Expected `str` or `Path` for `file`.")
+
+    file = Path(file)
+    with file.open(mode="w", encoding="utf-8") as f:
+        json.dump(content, f)

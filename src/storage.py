@@ -25,6 +25,17 @@ def append_json(file: str | Path, content: dict) -> None:
 
     # In the future, check for keys that are present in both dictionaries (main_dict and content).
 
+def get_item(key: str, file: str | Path) -> dict | None:
+    """
+    Extract and return the given key and its value from the dictionary in the given file.
+    Return None if the key doesn't exist.
+
+    :param key: A string of the key to extract.
+    :param file: A string or `Path` object of the file to read.
+    """
+    file_dict = read_json(file)
+    return file_dict.get(key, default=None)
+
 def read_json(file: str | Path) -> dict[str, list[str]]:
     """
     Read the given JSON file and return a Python dictionary.
@@ -55,4 +66,4 @@ def write_json(content: dict, file: str | Path) -> None:
 
     file = Path(file)
     with file.open(mode="w", encoding="utf-8") as f:
-        json.dump(content, f)
+        json.dump(content, f, sort_keys=True, indent=4)

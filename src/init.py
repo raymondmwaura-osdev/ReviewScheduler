@@ -11,6 +11,7 @@ overwriting existing data.
 """
 
 from pathlib import Path
+import storage
 
 # Commented directories will be automatically created by setting `parents=True`.
 DIRECTORIES = [
@@ -45,4 +46,5 @@ def init_scheduler() -> None:
     for directory in DIRECTORIES:
         Path(directory).mkdir(parents=True)
     for file in FILES:
-        Path(file).touch()
+        # Initialize JSON files with an empty dictionary.
+        storage.write_json({}, file)

@@ -8,12 +8,12 @@ def backup_file(file: str) -> None:
     """
     pass
 
-def append_json(file: str | Path, content: dict) -> None:
+def append_json(content: dict, file: str | Path) -> None:
     """
     Append the given dictionary to the dictionary in the given JSON file.
 
-    :param file: JSON file to append to. Can be a string or a `pathlib.Path` object.
     :param content: A dictionary containing the information to append to the file.
+    :param file: JSON file to append to. Can be a string or a `pathlib.Path` object.
     """
     if not isinstance(file, (str, Path)):
         raise ValueError("Expected `str` or `Path` for `file`.")
@@ -27,14 +27,23 @@ def append_json(file: str | Path, content: dict) -> None:
 
 def get_item(key: str, file: str | Path) -> dict | None:
     """
-    Extract and return the given key and its value from the dictionary in the given file.
+    Extract and return the value of the given key from the dictionary in the given file.
     Return None if the key doesn't exist.
 
     :param key: A string of the key to extract.
     :param file: A string or `Path` object of the file to read.
     """
     file_dict = read_json(file)
-    return file_dict.get(key, default=None)
+    return file_dict.get(key, None)
+
+def get_keys(file: Path) -> list:
+    """
+    Return a list of keys from the dictionary in the given JSON file.
+
+    :param file: JSON file to read from.
+    """
+    file_dict = read_json(file)
+    return list(file_dict.keys())
 
 def read_json(file: str | Path) -> dict[str, list[str]]:
     """

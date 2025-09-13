@@ -1,8 +1,3 @@
-"""
-Generate study and review dates using fixed day intervals.
-The study/review date is provided as a string in the format "YYYY-MM-DD".
-"""
-
 from utilities import constants
 import datetime
 

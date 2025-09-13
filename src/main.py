@@ -1,5 +1,9 @@
-from generator import add_study_date
-from init import init_scheduler
+#!/bin/python3
+from features import (
+    add,
+    init,
+    review
+)
 import argparse
 
 parser = argparse.ArgumentParser(prog="ReviewScheduler")
@@ -22,12 +26,23 @@ add_date_parser.add_argument(
     metavar="today / YYYY-MM-DD"
 )
 
+review_parser = subparser.add_parser(
+    "review",
+    help="Output a markdown file showing reviews for the given date."
+)
+review_parser.add_argument(
+    "review_date",
+    help="Review date. Can be \"today\" or a date in this format: 'YYYY-MM-DD'."
+)
+
 args = parser.parse_args()
 
 ###
 
 if args.command == "init":
-    init_scheduler()
+    init.init_rs()
 
 elif args.command == "add":
-    add_study_date(args.study_date)
+    add.study_date(args.study_date)
+
+# elif args.command == "review":

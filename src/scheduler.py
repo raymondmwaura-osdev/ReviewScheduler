@@ -8,27 +8,23 @@ from datetime import datetime, timedelta, date
 INTERVAL_OFFSETS = [2, 6, 13, 29, 59, 119]  # Days between study date and each review.
 DATE_FORMAT = "%Y-%m-%d"
 
-def schedule_review_dates(study_date: str | date) -> list[str]:
+def schedule_review_dates(study_date: date) -> list[str]:
     """
     Generate review dates from a given study date.
 
     The review dates are calculated by adding predefined day offsets
     to the provided study date.
 
-    :param study_date: Study date in "YYYY-MM-DD" format or a `date` object.
+    :param study_date: A `date` object representing the study date.
     :return: List of review dates in "YYYY-MM-DD" format.
     """
-    
-    if isinstance(study_date, str):
-        study_date = parse_date(study_date)
-
     review_dates = [
         study_date + timedelta(days=offset)
         for offset in INTERVAL_OFFSETS
     ]
     return format_dates(review_dates)
 
-def get_study_dates(review_date: str) -> list[str]:
+def get_study_dates(review_date: date) -> list[str]:
     """
     Generate possible study dates from a given review date.
 
@@ -38,28 +34,11 @@ def get_study_dates(review_date: str) -> list[str]:
     :param review_date: Review date in "YYYY-MM-DD" format.
     :return: List of study dates in "YYYY-MM-DD" format.
     """
-
-    review_date = parse_date(review_date)
     study_dates = [
         review_date - timedelta(days=offset)
         for offset in INTERVAL_OFFSETS
     ]
     return format_dates(study_dates)
-
-def parse_date(date_str: str) -> date:
-    """
-    Parse a date string into a `date` object.
-
-    :param date_str: Date string in "YYYY-MM-DD" format.
-    :return: A `date` object representing the given date.
-    :raises ValueError: If the string does not match the expected format.
-    """
-    try:
-        return datetime.strptime(date_str, DATE_FORMAT).date()
-    except ValueError:
-        raise ValueError(
-            f"Invalid date format: `{date_str}`.Expected format is 'YYYY-MM-DD'."
-        )
 
 def format_dates(dates: list[date]) -> list[str]:
     """

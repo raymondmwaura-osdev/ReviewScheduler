@@ -1,5 +1,25 @@
 from utilities import constants
-import datetime, sys
+import datetime, pathlib, sys
+
+# The functions are arranged in ascending alphabetical order.
+def locate_vault() -> pathlib.Path:
+    """
+    Locate the `.rs` directory in the current directory tree.
+    Exit if it isn't found or is not a directory.
+
+    :return: A `pathlib.Path` object of the `.rs` directory.
+    """
+    current_directory = pathlib.Path.cwd()
+
+    for parent in [current_directory, *current_directory.parents]:
+        vault_path = parent / constants.VAULT 
+        if vault_path.exists() and vault_path.is_dir():
+            return vault_path
+
+    sys.exit(
+        "ReviewScheduler is not initialized in the current directory tree.\n"
+        "Use `rs init` to initialize it in the current working directory."
+    )
 
 def parse_date(date_str: str) -> datetime.date:
     """

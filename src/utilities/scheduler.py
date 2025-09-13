@@ -3,10 +3,10 @@ Generate study and review dates using fixed day intervals.
 The study/review date is provided as a string in the format "YYYY-MM-DD".
 """
 
+from utilities import constants
 import datetime
 
 INTERVAL_OFFSETS = [2, 6, 13, 29, 59, 119]  # Days between study date and each review.
-DATE_FORMAT = "%Y-%m-%d"
 
 def schedule_review_dates(study_date: datetime.date) -> list[str]:
     """
@@ -47,4 +47,4 @@ def format_dates(dates: list[datetime.date]) -> list[str]:
     :param dates: List of `datetime.date` objects.
     :return: List of date strings in "YYYY-MM-DD" format.
     """
-    return [date.strftime(DATE_FORMAT) for date in dates]
+    return [date.strftime(constants.DATE_FORMAT) for date in dates]

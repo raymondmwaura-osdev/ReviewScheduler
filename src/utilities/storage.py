@@ -57,7 +57,7 @@ def read_json(file: pathlib.Path) -> dict:
         print(f"WARNING: File not found: \"{file}\". Proceeding with empty content.")
         return {}
 
-def write_json(content: dict, file: pathlib.Path) -> none:
+def write_json(content: dict, file: pathlib.Path) -> None:
     """
     Write the given dictionary to the given file.
 
@@ -68,4 +68,4 @@ def write_json(content: dict, file: pathlib.Path) -> none:
         raise ValueError("Expected a `pathlib.Path` object for `file`.")
 
     with file.open(mode="w", encoding="utf-8") as f:
-        json.dump(content, f, sort_keys=true, indent=4)
+        json.dump(content, f, sort_keys=True, indent=4)

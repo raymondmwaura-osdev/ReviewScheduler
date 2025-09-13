@@ -3,48 +3,48 @@ This module provides functionality to initialize the `.scheduler` environment
 within the current working directory. It creates the necessary directory 
 structure and files required by the scheduling system.
 
-Specifically, it generates the `.scheduler` directory along with its 
-subdirectories (`schedule`, `schedule/backup`, and `history`) and essential 
-files (`daily.json` and `reviews_by_date.json`). If a `.scheduler` entry 
-already exists in the working directory, initialization is aborted to avoid 
+Specifically, it generates the `.rs` directory along with its
+subdirectories (`backup` and `history`) and essential files
+(`study_review.json` and `review_study.json`). If a `.rs` entry
+already exists in the working directory, initialization is aborted to avoid
 overwriting existing data.
 """
 
-from pathlib import Path
-import storage
+from utilities import storage, constants
+import pathlib, sys
 
 # Commented directories will be automatically created by setting `parents=True`.
 DIRECTORIES = [
-#   ".scheduler/",
-#   ".scheduler/schedule/",
-    ".scheduler/schedule/backup/",
-    ".scheduler/history/"
+#   f"{constants.VAULT}",
+    f"{constants.VAULT}/backup",
+    f"{constants.VAULT}/history"
 ]
 
-FILES = [
-    ".scheduler/schedule/daily.json",
-    ".scheduler/schedule/reviews_by_date.json"
+JSON_FILES = [
+    f"{constants.VAULT}/{constants.STUDY_REVIEW_FILE}",
+    f"{constants.VAULT}/{constants.REVIEW_STUDY_FILE}"
 ]
 
-def init_scheduler() -> None:
+def init_rs() -> None:
     """
-    Initialize the `.scheduler` environment in the current working directory.
+    Initialize the `.rs` environment in the current working directory.
 
-    This function creates the `.scheduler` directory structure and required 
-    files if they do not already exist. If a `.scheduler` directory or file 
-    with the same name is found in the working directory, a `FileExistsError` 
-    is raised to prevent overwriting.
+    :raises `FileExistsError`: If a `.rs` directory or file is found
+        in the working directory.
     """
-    working_directory = Path().cwd()
+    working_directory = pathlib.Path().cwd()
 
     for entry in working_directory.iterdir():
-        if entry.name == ".scheduler":
-            raise FileExistsError(
-                "A file or directory named `.scheduler` already exists in the working directory."
-            )
+        if entry.name != constants.VAULT: continue
+        sys.exit(
+            f"ERROR: A file or directory named `{constants.VAULT}` "
+            "already exists in the working directory."
+        )
 
     for directory in DIRECTORIES:
-        Path(directory).mkdir(parents=True)
-    for file in FILES:
+        pathlib.Path(directory).mkdir(parents=True)
+    for file in JSON_FILES:
         # Initialize JSON files with an empty dictionary.
-        storage.write_json({}, file)
+        # This prevents `json.decoder.JSONDecodeError` which is raised when
+        # attempting to read an empty JSON file.
+        storage.write_json({}, pathlib.Path(file))

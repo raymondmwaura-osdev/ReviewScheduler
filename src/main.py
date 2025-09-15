@@ -45,4 +45,5 @@ if args.command == "init":
 elif args.command == "add":
     add.study_date(args.study_date)
 
-# elif args.command == "review":
+elif args.command == "review":
+    review.get_reviews(args.review_date)

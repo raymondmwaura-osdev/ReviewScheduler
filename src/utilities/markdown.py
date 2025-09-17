@@ -42,3 +42,15 @@ def heading(text: str, level: int = 2) -> str:
         raise ValueError("Param `level` can only be in the range(1, 7).")
 
     return "#"*level + f" {text}\n"
+
+def list_item(text: str) -> str:
+    """
+    Return a markdown list item.
+
+    NOTE: A newline character is automatically added to the returned string.
+
+    :param text: A string that will be returned as a list item.
+    :return: A string as a list item.
+    """
+
+    return f"+ {text}\n"

@@ -1,11 +1,5 @@
+# NOTE: The functions are arranged alphabetically.
 import json, pathlib
-
-def backup_file(file: str) -> None:
-    """
-    If file in ["daily.json", "reviews_by_date.json"], backup to the `schedule/backup` directory.
-    If file is "today.md", then backup in the `history` directory.
-    """
-    pass
 
 def append_json(content: dict, file: pathlib.Path) -> None:
     """

@@ -1,89 +1,72 @@
 # ReviewScheduler
 
-**ReviewScheduler** is a utility program for generating and managing review schedules based on fixed intervals. It focuses only on dates, making it suitable for use alongside other learning or review systems.
+## Description
+
+ReviewScheduler is a command-line application designed to support spaced-repetition study methods. The program allows a user to record study dates and automatically schedules review dates based on fixed intervals. It further generates review schedules in Markdown format for convenient use and tracking. The application aims to provide a lightweight and transparent approach to reviewing study material, without requiring dependence on large-scale flashcard systems.
 
 ---
 
-## Features
+## Current Status
 
-* Generates a structured review schedule based on a predefined table of intervals.
-* Produces two main JSON files:
+This project is in **beta stage** and is under slow, incremental development.
 
-  * `daily.json`: Maps each learning date to its scheduled review dates.
-  * `reviews_by_date.json`: Maps each review date to the learning dates due on that day.
-
-* Creates a `today.md` file with daily review requirements, organized by priority.
-* Archives past `today.md` files into a `history/` directory for record-keeping.
-* Automatically maintains backups of schedule files for reliability.
++ The program is functional, but lacks a comprehensive test suite.
++ Documentation outside the codebase (docstrings and comments) is minimal.
++ User should expect addition of new features and potential changes in instalation instructions.
++ Development pace is deliberately slow, and updates may occur infrequently.
 
 ---
 
-## Review Intervals
+## Installation Instructions
 
-For each learning date (**D0**), the following review dates are generated:
+At present, installation uses a simple manual process.
 
-| Review Step | Review Day | Offset from D0    |
-| ----------- | ---------- | ----------------- |
-| Initial     | Day 1      | D0 (learning day) |
-| 2           | Day 3      | +2 days           |
-| 3           | Day 7      | +6 days           |
-| 4           | Day 14     | +13 days          |
-| 5           | Day 30     | +29 days          |
-| 6           | Day 60     | +59 days          |
-| 7           | Day 120    | +119 days         |
+1. Move the program’s source files into `/opt/rs`.  
+2. Create a symbolic link from the main executable file to `/usr/local/bin`.  
+   ```sh
+   sudo ln -s /opt/rs/main.py /usr/local/bin/rs
+   ```
 
----
+3. Ensure the file has executable permissions:
 
-## Directory Structure
+   ```sh
+   chmod +x /opt/rs/main.py
+   ```
 
-* `schedule/`: Generated scheduling files (`daily.json` and `review_by_date.json`).
-* `history/`: Archived daily review files.
-* `schedule/backup/`: Backups of core schedule files.
+This setup allows the program to be executed globally from any working directory by invoking `reviewscheduler`.
 
 ---
 
-## Example `today.md`
+## Usage Example
 
-```markdown
-# 2025-08-08
+Initialize the program in the current directory:
 
-## Top Priority Reviews
+```sh
+$ rs init
+```
 
-*Reviews scheduled for 2 and 6 days after learning.*
+Record a study date:
 
-+ 2025-08-06
-+ 2025-08-02
+```sh
+$ rs add 2025-09-15
+```
 
-## Middle Priority Reviews
+Generate a Markdown file of reviews for today:
 
-*Reviews scheduled for 13 and 29 days after learning.*
-
-+ 2025-08-01
-+ 2025-07-24
-
-## Least Priority Reviews
-
-*Reviews scheduled for 59 and 119 days after learning.*
-
-+ 2025-07-09
+```sh
+$ rs review today
 ```
 
 ---
 
-## Future Features
+## Future Work
 
-* **Missed Days and Overdue Handling**
+Planned improvements include:
 
-  * Automatically detect and reschedule missed reviews.
-
-* **Daily Caps**
-
-  * Limit the number of reviews per day and redistribute lower-priority items.
-
----
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
+* Development of automated unit tests.
+* Expansion of external documentation beyond code-level docstrings.
+* User configuration for custom review intervals.
+* Addition of new features.
+* Formal packaging and distribution through `pip`.
 
 ---

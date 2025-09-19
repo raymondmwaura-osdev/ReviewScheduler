@@ -15,14 +15,14 @@ import pathlib, sys
 
 # Commented directories will be automatically created by setting `parents=True`.
 DIRECTORIES = [
-#   f"{constants.VAULT}",
-    f"{constants.VAULT}/backup",
-    f"{constants.VAULT}/history"
+#   constants.VAULT,
+    constants.BACKUP_DIRECTORY,
+    constants.HISTORY_DIRECTORY
 ]
 
 JSON_FILES = [
-    f"{constants.VAULT}/{constants.STUDY_REVIEW_FILE}",
-    f"{constants.VAULT}/{constants.REVIEW_STUDY_FILE}"
+    constants.STUDY_REVIEW_FILE,
+    constants.REVIEW_STUDY_FILE
 ]
 
 def init_rs() -> None:
@@ -34,6 +34,7 @@ def init_rs() -> None:
     """
     working_directory = pathlib.Path().cwd()
 
+    # Check if '.rs' exists.
     for entry in working_directory.iterdir():
         if entry.name != constants.VAULT: continue
         sys.exit(

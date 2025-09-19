@@ -16,7 +16,6 @@ from utilities import (
 )
 import datetime, pathlib
 
-VAULT_PARENT = toolbox.locate_vault()
 
 def get_reviews(review_date: str) -> None:
     """
@@ -37,6 +36,9 @@ def get_reviews(review_date: str) -> None:
     Creates a file named "reviews.md" in the current working 
     directory containing the formatted output.
     """
+    global VAULT_PARENT
+    VAULT_PARENT = toolbox.locate_vault()
+
 
     review_date = (
         datetime.datetime.now().date() if review_date == "today"
